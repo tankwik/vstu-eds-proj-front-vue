@@ -10,15 +10,21 @@
         <div class="field">
           <div class="flex justify-content-between">
             <label for="login">Логин: </label>
-            <InputText id="login" type="username" v-model="login" class="login-input" />
+            <InputText id="login" type="username" v-model="login" class="login-input"
+              :class="{ 'p-invalid': invalid_login }" />
           </div>
         </div>
         <div class="field">
           <div class="flex justify-content-between mt-2">
             <label for="password" class="-ml-2">Пароль: </label>
-            <Password id="password" v-model="password" toggleMask></Password>
+            <Password id="password" v-model="password" toggleMask :class="{ 'p-invalid': invalid_password }"></Password>
           </div>
         </div>
+
+        <div class="flex justify-content-center mt-2" v-if="auth_error">
+          <small id="auth-error" style="color:red"> Неверный логин или пароль! </small>
+        </div>
+
         <div class="flex justify-content-center mt-4">
           <Button label="Войти" type="submit" />
         </div>
@@ -42,25 +48,63 @@ export default {
     return {
       login: '',
       password: '',
+      invalid_login: false,
+      invalid_password: false,
+      auth_error: false,
     }
   },
 
-  
+
   methods: {
     handleSubmit() {
+      if (!this.validateInput()) return;
+
       instance.post('/users/auth',
         {
           login: this.login,
           password: this.password
         }
       ).then((response) => {
-        this.localStorage.isAuth = !!response.data.isAuth;
-        this.$router.push('/users');
+        const resIsAuth = !!response.data.isAuth;
+        if (resIsAuth) {
+          this.localStorage.isAuth = !!response.data.isAuth;
+          this.$router.push('/users');
+        } else {
+          this.invalid_login = true;
+          this.invalid_password = true;
+          this.auth_error = true;
+
+          setTimeout(() => {
+            this.invalid_login = false;
+            this.invalid_password = false;
+            this.auth_error = false;
+          }, 3000);
+        }
       }
       ).catch((error) => {
         console.log(error);
       }
       )
+    },
+
+    validateInput() {
+      if (this.login === '') {
+        this.invalid_login = true;
+        setTimeout(() => {
+          this.invalid_login = false;
+        }, 5000);
+        return false;
+      }
+
+      if (this.password === '') {
+        this.invalid_password = true;
+        setTimeout(() => {
+          this.invalid_password = false;
+        }, 5000);
+        return false;
+      }
+
+      return true;
     },
   },
 };

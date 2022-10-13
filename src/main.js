@@ -11,6 +11,11 @@ import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import Panel from 'primevue/panel';
 import Password from 'primevue/password';
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import ColumnGroup from 'primevue/columngroup';     //optional for column grouping
+import Row from 'primevue/row';                     //optional for row
+import Dialog from 'primevue/dialog';
 
 import 'primevue/resources/themes/lara-light-teal/theme.css';
 import 'primevue/resources/primevue.min.css';
@@ -30,5 +35,10 @@ app.component('InputText', InputText);
 app.component('Button', Button);
 app.component('Panel', Panel);
 app.component('Password', Password);
+app.component('DataTable', DataTable);
+app.component('Column', Column);
+app.component('ColumnGroup', ColumnGroup);
+app.component('Row', Row);
+app.component('Dialog', Dialog);
 
 app.mount('#app')

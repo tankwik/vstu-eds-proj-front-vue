@@ -59,7 +59,9 @@
       </Column>
     </DataTable>
     <user-view :user="editedUser" :showComponent="showModal" v-if="showModal"
-      @close-modal="showModal = false; editedUser=null"></user-view>
+      @close-modal="showModal = false; editedUser=null"
+      @get-prev-user="getPrevUser($event)"
+      @get-next-user="getNextUser($event)"></user-view>
   </div>
 </template>
 
@@ -119,6 +121,16 @@ export default {
         this.users = data;
         this.loading = false;
       });
+    },
+    getPrevUser(userId) {
+      const elementIndex = this.users.findIndex((item => item.id === userId));
+      const prevElement = this.users.find((item, index) => index === elementIndex - 1);
+      this.editedUser = prevElement;
+    },
+    getNextUser(userId) {
+      const elementIndex = this.users.findIndex((item => item.id === userId));
+      const nextElement = this.users.find((item, index) => index === elementIndex + 1);
+      this.editedUser = nextElement;
     },
   },
 };

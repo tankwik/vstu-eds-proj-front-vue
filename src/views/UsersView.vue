@@ -77,11 +77,9 @@ export default {
     }
     next()
   },
-
   components: {
     UserView,
   },
-
   data() {
     return {
       users: null,

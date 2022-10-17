@@ -5,4 +5,4 @@ services:
     container_name: vstu_eds_front_vue
     restart: always
     ports:
-      - 4200:4200
+      - 4200:8080

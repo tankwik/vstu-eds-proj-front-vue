@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import UserService from '../services/UserService.js';
+import UserService from '@/services/UserService.js';
 
 export default {
   props: {

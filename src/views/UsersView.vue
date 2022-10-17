@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import UserService from '../services/UserService.js';
+import UserService from '@/services/UserService.js';
 import { FilterMatchMode, FilterOperator } from 'primevue/api';
 import UserView from './UserView.vue';
 

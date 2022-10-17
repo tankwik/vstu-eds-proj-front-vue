@@ -1,6 +1,22 @@
-FROM node:14-alpine AS build
-WORKDIR /usr/src/app
-COPY package.json package-lock.json ./
+FROM node:lts-alpine
+
+# устанавливаем простой HTTP-сервер для статики
+RUN npm install -g http-server
+
+# делаем каталог 'app' текущим рабочим каталогом
+WORKDIR /app
+
+# копируем оба 'package.json' и 'package-lock.json' (если есть)
+COPY package*.json ./
+
+# устанавливаем зависимости проекта
 RUN npm install
+
+# копируем файлы и каталоги проекта в текущий рабочий каталог (т.е. в каталог 'app')
 COPY . .
-CMD npm run dev
+
+# собираем приложение для production с минификацией
+RUN npm run build
+
+EXPOSE 4200
+CMD [ "http-server", "dist" ]

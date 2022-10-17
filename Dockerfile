@@ -10,7 +10,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # устанавливаем зависимости проекта
-RUN npm ci
+RUN npm install --legacy-peer-deps
 
 # копируем файлы и каталоги проекта в текущий рабочий каталог (т.е. в каталог 'app')
 COPY . .

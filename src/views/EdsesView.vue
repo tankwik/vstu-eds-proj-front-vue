@@ -9,6 +9,9 @@
         <div>
           <h4 class="m-0">Сертификаты ЭЦП</h4>
         </div>
+        <div>
+          <Button label="Добавить" icon="pi pi-plus" class="p-button-rounded" @click="showCreateModal=true"/>
+        </div>
       </div>
     </template>
     <template #empty>
@@ -100,24 +103,29 @@
     </Column>
     <Column headerStyle="width: 4rem; text-align: center" bodyStyle="text-align: center; overflow: visible">
       <template #body="{ data }">
-        <FileUpload v-if="!data.fileName" mode="basic" name="file" :maxFileSize="1000000" :customUpload="true" @uploader="uploadFile($event, data.id)" :multiple="false" :auto="true" chooseLabel="Загрузить" />
+        <FileUpload v-if="!data.fileName" mode="basic" name="file" :maxFileSize="1000000" :customUpload="true"
+          @uploader="uploadFile($event, data.id)" :multiple="false" :auto="true" chooseLabel="Загрузить" />
         <Tag v-if="data.fileName" :value="data.fileName" @click="downloadFile(data.id)"></Tag>
       </template>
     </Column>
     <Column>
       <template #body="{ data }">
-        <Button v-if="data.fileName" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-text" @click="deleteFile(data.id)" />
+        <Button v-if="data.fileName" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-text"
+          @click="deleteFile(data.id)" />
       </template>
     </Column>
   </DataTable>
   <eds-view :eds="editedEds" :showComponent="showModal" v-if="showModal"
     @close-modal="showModal = false; editedEds = null"></eds-view>
+  <create-eds-view :eds="{}" :showComponent="showCreateModal" v-if="showCreateModal"
+    @close-modal="showCreateModal = false"></create-eds-view>
 </template>
 
 <script>
 import EdsService from '@/services/EdsService.js';
 import { FilterMatchMode, FilterOperator } from 'primevue/api';
 import EdsView from './EdsView.vue';
+import CreateEdsView from './CreateEdsView.vue';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -139,6 +147,7 @@ export default {
 
   components: {
     EdsView,
+    CreateEdsView,
   },
 
   data() {
@@ -152,12 +161,21 @@ export default {
       },
       loading: true,
       showModal: false,
+      showCreateModal: false,
       editedEds: null,
     }
   },
 
   watch: {
     showModal: {
+      handler(newValue) {
+        if (!newValue) {
+          this.reloadEdsList();
+        }
+      }
+    },
+
+    showCreateModal: {
       handler(newValue) {
         if (!newValue) {
           this.reloadEdsList();
@@ -194,7 +212,7 @@ export default {
     },
 
     uploadFile(event, id) {
-      this.edsService.uploadFile(event.files[0], id).then(()=>{
+      this.edsService.uploadFile(event.files[0], id).then(() => {
         this.reloadEdsList();
       });
     },

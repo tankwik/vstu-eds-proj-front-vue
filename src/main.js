@@ -16,6 +16,9 @@ import Column from 'primevue/column';
 import ColumnGroup from 'primevue/columngroup';     //optional for column grouping
 import Row from 'primevue/row';                     //optional for row
 import Dialog from 'primevue/dialog';
+import Calendar from 'primevue/calendar';
+import Tag from 'primevue/tag';
+import FileUpload from 'primevue/fileupload';
 
 import 'primevue/resources/themes/lara-light-teal/theme.css';
 import 'primevue/resources/primevue.min.css';
@@ -40,5 +43,8 @@ app.component('Column', Column);
 app.component('ColumnGroup', ColumnGroup);
 app.component('Row', Row);
 app.component('Dialog', Dialog);
+app.component('Calendar', Calendar);
+app.component('Tag', Tag);
+app.component('FileUpload', FileUpload);
 
 app.mount('#app')

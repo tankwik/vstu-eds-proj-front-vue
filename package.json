@@ -12,6 +12,7 @@
     "primeflex": "^3.2.1",
     "primeicons": "^6.0.1",
     "primevue": "^3.17.0",
+    "ramda": "^0.28.0",
     "sass": "^1.55.0",
     "vue": "^3.2.38",
     "vue-reactive-storage": "github:ropbla9/vue-reactive-storage",

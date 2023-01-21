@@ -105,7 +105,7 @@
       <template #body="{ data }">
         <FileUpload v-if="!data.fileName" mode="basic" name="file" :maxFileSize="1000000" :customUpload="true"
           @uploader="uploadFile($event, data.id)" :multiple="false" :auto="true" chooseLabel="Загрузить" />
-        <Tag v-if="data.fileName" :value="data.fileName" @click="downloadFile(data.id)"></Tag>
+        <Tag style="cursor:pointer" v-if="data.fileName" :value="data.fileName" @click="downloadFile(data.id)"></Tag>
       </template>
     </Column>
     <Column>

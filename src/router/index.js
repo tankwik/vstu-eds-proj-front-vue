@@ -24,11 +24,6 @@ const router = createRouter({
       name: 'edses',
       component: () => import('../views/EdsesView.vue')
     },
-    {
-      path: '/kktes',
-      name: 'kktes',
-      component: () => import('@/views/KKtesView.vue')
-    },
     { 
       path: '/:pathMatch(.*)*',
       name: 'NotFound',

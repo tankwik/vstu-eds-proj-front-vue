@@ -116,7 +116,7 @@
     @close-modal="showModal = false; editedKkt = null"
     @get-prev-kkt="getPrevKkt($event)"
     @get-next-kkt="getNextKkt($event)"></kkt-view>
-  <create-kkt-view :eds="{}" :showComponent="showCreateModal" v-if="showCreateModal"
+  <create-kkt-view :kkt="{}" :showComponent="showCreateModal" v-if="showCreateModal"
     @close-modal="showCreateModal = false"></create-kkt-view>
 </template>
 

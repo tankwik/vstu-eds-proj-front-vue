@@ -45,9 +45,12 @@
         <span class="image-text">{{ data.position }}</span>
       </template>
     </Column>
-    <Column field="fullname" header="ФИО" sortable>
+    <Column field="fullname" header="ФИО" sortable filterMatchMode="contains">
       <template #body="{ data }">
         <span class="image-text">{{ data.fullname }}</span>
+      </template>
+      <template #filter="{ filterModel }">
+        <InputText type="text" v-model="filterModel.value" class="p-column-filter" placeholder="Поиск по ФИО" />
       </template>
     </Column>
     <Column field="inn" header="ИНН организации" sortable>
@@ -171,6 +174,7 @@ export default {
       filters: {
         'id': { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
         'organization': { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
+        'fullname': { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
         'certificateSerial': { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
         'usageType': { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
       },

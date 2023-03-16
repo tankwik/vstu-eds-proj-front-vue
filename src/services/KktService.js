@@ -18,8 +18,8 @@ export default class KktService {
   }
 
   createKkt(kktEntity) {
-    if (typeof kktEntity.fromDate === 'object') {
-      kktEntity.fromDate = getTS(kktEntity.fromDate);
+    if (typeof kktEntity.regDate === 'object') {
+      kktEntity.regDate = getTS(kktEntity.regDate);
     }
     if (typeof kktEntity.toDate === 'object') {
       kktEntity.toDate = getTS(kktEntity.toDate);
@@ -28,8 +28,8 @@ export default class KktService {
   }
 
   updateKkt(kktEntity) {
-    if (typeof kktEntity.fromDate === 'object') {
-      kktEntity.fromDate = getTS(edsEntity.fromDate);
+    if (typeof kktEntity.regDate === 'object') {
+      kktEntity.regDate = getTS(edsEntity.regDate);
     }
     if (typeof kktEntity.toDate === 'object') {
       kktEntity.toDate = getTS(kktEntity.toDate);

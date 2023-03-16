@@ -3,7 +3,7 @@
     v-model:filters="filters" filterDisplay="menu" :loading="loading" style="font-size: 12px;"
     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
     :rowsPerPageOptions="[5, 10, 15]" currentPageReportTemplate="Показаны с {first} по {last} из {totalRecords} записей"
-    :globalFilterFields="['id', 'organigation', 'certificateSerial']" responsiveLayout="scroll">
+    :globalFilterFields="['id', 'organization', 'certificateSerial']" responsiveLayout="scroll">
     <template #header>
       <div class="flex justify-content-between align-items-center">
         <div>
@@ -170,7 +170,7 @@ export default {
       edses: null,
       filters: {
         'id': { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
-        'organigation': { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
+        'organization': { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
         'certificateSerial': { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
         'usageType': { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
       },

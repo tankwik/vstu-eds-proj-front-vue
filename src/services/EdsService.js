@@ -55,4 +55,18 @@ export default class UserService {
     return instance.delete(`/eds/deletefile/${id}`);
   }
 
+  uploadOpenPart(file, id) {
+    const formData = new FormData();
+    formData.append("file", file);
+    return instance.post(`/eds/addopenpartfile/${id}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }).then(response => response.data).catch(console.log);
+  }
+
+  deleteOpenPart(id) {
+    return instance.delete(`/eds/deleteopenpartfile/${id}`);
+  }
+
 }

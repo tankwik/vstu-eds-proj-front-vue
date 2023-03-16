@@ -3,7 +3,7 @@
   <div>
     <Menubar :model="items" class="justify-content-between">
       <template #start>
-        <h3>Управление сертификатами ЭЦП</h3>
+        <h3>Управление сертификатами ЭЦП и ККТ</h3>
       </template>
       <template #item="{item}">
         <router-link :to="item.to" custom v-slot="{navigate, isActive}" v-if="isAuth">
@@ -36,6 +36,11 @@ export default {
           label: 'Сертификаты ЭЦП',
           icon: 'pi pi-fw pi-file-o',
           to: '/edses',
+        },
+        {
+          label: 'Сертификаты ККТ',
+          icon: 'pi pi-fw pi-file-o',
+          to: '/kktes',
         },
         {
           label: 'Выход',

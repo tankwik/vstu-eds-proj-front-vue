@@ -1,6 +1,6 @@
 <template>
-  <DataTable :value="edses" :paginator="true" class="p-datatable-users mt-3" :rows="5" dataKey="id" :rowHover="true"
-    v-model:filters="filters" filterDisplay="menu" :loading="loading"
+  <DataTable :value="edses" :paginator="true" class="p-datatable-small mt-3" :rows="5" dataKey="id" :rowHover="true"
+    v-model:filters="filters" filterDisplay="menu" :loading="loading" style="font-size: 12px;"
     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
     :rowsPerPageOptions="[5, 10, 15]" currentPageReportTemplate="Показаны с {first} по {last} из {totalRecords} записей"
     :globalFilterFields="['id', 'organigation', 'certificateSerial']" responsiveLayout="scroll">
@@ -114,9 +114,24 @@
           @click="deleteFile(data.id)" />
       </template>
     </Column>
+    <Column headerStyle="width: 4rem; text-align: center" bodyStyle="text-align: center; overflow: visible">
+      <template #body="{ data }">
+        <FileUpload v-if="!data.openPartFileName" mode="basic" name="file" :maxFileSize="1000000" :customUpload="true"
+          @uploader="uploadOpenPart($event, data.id)" :multiple="false" :auto="true" chooseLabel="Загрузить ОЧ" />
+        <Tag style="cursor:pointer" v-if="data.openPartFileName" :value="data.openPartFileName" @click="downloadOpenPart(data.id)"></Tag>
+      </template>
+    </Column>
+    <Column>
+      <template #body="{ data }">
+        <Button v-if="data.openPartFileName" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-text"
+          @click="deleteOpenPart(data.id)" />
+      </template>
+    </Column>
   </DataTable>
   <eds-view :eds="editedEds" :showComponent="showModal" v-if="showModal"
-    @close-modal="showModal = false; editedEds = null"></eds-view>
+    @close-modal="showModal = false; editedEds = null"
+    @get-prev-eds="getPrevEds($event)"
+    @get-next-eds="getNextEds($event)"></eds-view>
   <create-eds-view :eds="{}" :showComponent="showCreateModal" v-if="showCreateModal"
     @close-modal="showCreateModal = false"></create-eds-view>
 </template>
@@ -219,7 +234,34 @@ export default {
 
     deleteFile(id) {
       this.edsService.deleteFile(id).then(() => this.reloadEdsList()).catch(console.log);
-    }
+    },
+
+    downloadOpenPart(id) {
+      const url = `${API_URL}/eds/downloadopenpart/${id}`;
+      window.location.href = url;
+    },
+
+    uploadOpenPart(event, id) {
+      this.edsService.uploadOpenPart(event.files[0], id).then(() => {
+        this.reloadEdsList();
+      });
+    },
+
+    deleteOpenPart(id) {
+      this.edsService.deleteOpenPart(id).then(() => this.reloadEdsList()).catch(console.log);
+    },
+
+    getPrevEds(userId) {
+      const elementIndex = this.edses.findIndex((item => item.id === userId));
+      const prevElement = this.edses.find((item, index) => index === elementIndex - 1);
+      this.editedEds = prevElement;
+    },
+
+    getNextEds(userId) {
+      const elementIndex = this.edses.findIndex((item => item.id === userId));
+      const nextElement = this.edses.find((item, index) => index === elementIndex + 1);
+      this.editedEds = nextElement;
+    },
   },
 
 };

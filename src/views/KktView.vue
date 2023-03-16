@@ -1,93 +1,86 @@
 <template>
-  <Dialog :header="`ЭЦП ID: ${localEds.id}`" v-model:visible="displayModal"
+  <Dialog :header="`ККТ ID: ${localKkt.id}`" v-model:visible="displayModal"
     :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '40vw'}" :modal="true">
 
     <div class="flex justify-content-center mt-1">
-      <Button label="Предыдущий элемент" @click="previous(localEds.id)" class="p-button-link" />
-      <Button label="Следующий элемент" @click="next(localEds.id)" class="p-button-link" />
+      <Button label="Предыдущий элемент" @click="previous(localKkt.id)" class="p-button-link" />
+      <Button label="Следующий элемент" @click="next(localKkt.id)" class="p-button-link" />
     </div>
 
     <div class="field">
       <div class="flex justify-content-between mt-1">
         <label for="id">ID: </label>
-        <InputText id="id" type="username" v-model="localEds.id" disabled />
+        <InputText id="id" type="username" v-model="localKkt.id" disabled />
       </div>
     </div>
 
     <div class="field">
       <div class="flex justify-content-between mt-1">
         <label for="organization">Организация: </label>
-        <InputText id="organization" type="username" v-model="localEds.organization"/>
+        <InputText id="organization" type="username" v-model="localKkt.organization"/>
       </div>
     </div>
 
     <div class="field">
       <div class="flex justify-content-between mt-1">
-        <label for="position">Должность: </label>
-        <InputText id="position" type="username" v-model="localEds.position"/>
+        <label for="regNumber">Рег. номер: </label>
+        <InputText id="regNumber" type="username" v-model="localKkt.regNumber"/>
       </div>
     </div>
 
     <div class="field">
       <div class="flex justify-content-between mt-1">
-        <label for="fullname">ФИО: </label>
-        <InputText id="fullname" type="username" v-model="localEds.fullname"/>
+        <label for="zavNumber">Заводской №: </label>
+        <InputText id="zavNumber" type="username" v-model="localKkt.zavNumber"/>
       </div>
     </div>
 
     <div class="field">
       <div class="flex justify-content-between mt-1">
-        <label for="inn">ИНН организации: </label>
-        <InputText id="inn" type="username" v-model="localEds.inn"/>
+        <label for="kktModel">Модель: </label>
+        <InputText id="kktModel" type="username" v-model="localKkt.kktModel"/>
       </div>
     </div>
 
     <div class="field">
       <div class="flex justify-content-between mt-1">
-        <label for="certificateSerial">Серийный номер: </label>
-        <InputText id="certificateSerial" type="username" v-model="localEds.certificateSerial"/>
+        <label for="regDate">Дата регистрации: </label>
+        <Calendar inputId="regDate" v-model="localKkt.regDate" dateFormat="dd-mm-yy" />
       </div>
     </div>
 
     <div class="field">
       <div class="flex justify-content-between mt-1">
-        <label for="vendor">Поставщик: </label>
-        <InputText id="vendor" type="username" v-model="localEds.vendor"/>
+        <label for="toDate">Срок действия: </label>
+        <Calendar inputId="toDate" v-model="localKkt.toDate" dateFormat="dd-mm-yy" />
       </div>
     </div>
 
     <div class="field">
       <div class="flex justify-content-between mt-1">
-        <label for="usageType">Тип: </label>
-        <InputText id="usageType" type="username" v-model="localEds.usageType"/>
+        <label for="ofd">ОФД: </label>
+        <InputText id="ofd" type="username" v-model="localKkt.ofd"/>
       </div>
     </div>
 
     <div class="field">
       <div class="flex justify-content-between mt-1">
-        <label for="fromDate">Действует с: </label>
-        <Calendar inputId="fromDate" v-model="localEds.fromDate" dateFormat="dd-mm-yy" />
+        <label for="fnModel">Модель ФН: </label>
+        <InputText id="fnModel" type="username" v-model="localKkt.fnModel"/>
       </div>
     </div>
 
     <div class="field">
       <div class="flex justify-content-between mt-1">
-        <label for="toDate">Действует по: </label>
-        <Calendar inputId="toDate" v-model="localEds.toDate" dateFormat="dd-mm-yy" />
+        <label for="zavNumberFN">Заводской номер ФН: </label>
+        <InputText id="zavNumberFN" type="username" v-model="localKkt.zavNumberFN"/>
       </div>
     </div>
 
     <div class="field">
       <div class="flex justify-content-between mt-1">
-        <label for="comment">Комментарий: </label>
-        <InputText id="comment" type="username" v-model="localEds.comment"/>
-      </div>
-    </div>
-
-    <div class="field">
-      <div class="flex justify-content-between mt-1">
-        <label for="accountId">ID аккаунта: </label>
-        <InputText id="accountId" type="username" v-model="localEds.accountId"/>
+        <label for="comPortNumber">Номер COM-порта: </label>
+        <InputText id="comPortNumber" type="username" v-model="localKkt.comPortNumber"/>
       </div>
     </div>
 
@@ -96,7 +89,7 @@
     </div>
 
     <template #footer>
-      <Button label="Удалить ЭЦП" icon="pi pi-times" @click="deleteEdsAndCloseModal"
+      <Button label="Удалить ККТ" icon="pi pi-times" @click="deleteKktAndCloseModal"
         class="p-button-danger p-button-text" />
       <Button label="Сохранить" icon="pi pi-check" @click="saveWithoutCloseModal" 
         class="p-button-help p-button-text"/>
@@ -107,16 +100,16 @@
 </template>
 
 <script>
-import EdsService from '@/services/EdsService.js';
+import KktService from '@/services/KktService.js';
 
 export default {
   props: {
-    eds: Object,
+    kkt: Object,
     showComponent: Boolean,
   },
 
   created() {
-    this.edsService = new EdsService();
+    this.kktService = new KktService();
   },
 
   data() {
@@ -124,7 +117,7 @@ export default {
       displayModal: this.showComponent,
       errorMessage: '',
       error: false,
-      localEds: this.eds,
+      localKkt: this.kkt,
     }
   },
 
@@ -137,14 +130,14 @@ export default {
         }
       },
     },
-    eds: {
+    kkt: {
       handler(newValue, oldValue) {
         if (newValue === undefined) {
           console.log(oldValue);
-          this.localEds = oldValue;
+          this.localKkt = oldValue;
           return;
         }
-        this.localEds = newValue;
+        this.localKkt = newValue;
       }
     }
   },
@@ -152,7 +145,7 @@ export default {
   methods: {
     async saveAndCloseModal() {
       try {
-        await this.edsService.updateEds(this.localEds);
+        await this.kktService.updateKkt(this.localKkt);
         this.displayModal = false;
       } catch (error) {
         this.error = true;
@@ -165,7 +158,7 @@ export default {
     },
     async saveWithoutCloseModal() {
       try {
-        await this.edsService.updateEds(this.localEds);
+        await this.kktService.updateKkt(this.localKkt);
       } catch (error) {
         this.error = true;
         this.errorMessage = error.message;
@@ -175,9 +168,9 @@ export default {
         }, 5000);
       }
     },
-    async deleteEdsAndCloseModal() {
+    async deleteKktAndCloseModal() {
       try {
-        await this.edsService.deleteEds(this.localEds.id);
+        await this.kktService.deleteKkt(this.localKkt.id);
         this.displayModal = false;
       } catch (error) {
         this.error = true;
@@ -188,11 +181,11 @@ export default {
         }, 5000);
       }
     },
-    previous(userId) {
-      this.$emit('get-prev-eds', userId);
+    previous(kktId) {
+      this.$emit('get-prev-kkt', kktId);
     },
-    next(userId) {
-      this.$emit('get-next-eds', userId);
+    next(kktId) {
+      this.$emit('get-next-kkt', kktId);
     },
   },
 };
@@ -216,5 +209,13 @@ p {
 
 .p-dialog .p-button {
   min-width: 6rem;
+}
+
+.p-inputtext {
+  width: 40%;
+}
+
+.p-calendar {
+  width: 40%;
 }
 </style>

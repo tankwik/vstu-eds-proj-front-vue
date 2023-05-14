@@ -29,6 +29,11 @@ const router = createRouter({
       name: 'kktes',
       component: () => import('../views/KktesView.vue')
     },
+    {
+      path: '/users-labels',
+      name: 'users-labels',
+      component: () => import('../views/LabelsView.vue')
+    },
     { 
       path: '/:pathMatch(.*)*',
       name: 'NotFound',
@@ -36,7 +41,7 @@ const router = createRouter({
   ]
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, _, next) => {
   
   if (to.name !== 'login' && !localStorage.isAuth) next({ name: 'login' })
   else next()

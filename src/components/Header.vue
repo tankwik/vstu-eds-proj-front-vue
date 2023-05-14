@@ -43,6 +43,11 @@ export default {
           to: '/kktes',
         },
         {
+          label: 'Связка пользователей с ЭЦП',
+          icon: 'pi pi-fw pi-arrow-right-arrow-left',
+          to: '/users-labels',
+        },
+        {
           label: 'Выход',
           icon: 'pi pi-fw pi-power-off',
           to: '/logout',

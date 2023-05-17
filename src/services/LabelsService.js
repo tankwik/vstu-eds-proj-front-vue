@@ -25,4 +25,9 @@ export default class LabelsService {
   deleteLabel(labelID) {
     return instance.delete(`/labels/delete/${labelID}`);
   }
+
+  async getStatus() {
+    const response = await instance.get('/labels/status');
+    return response.data;
+  }
 }

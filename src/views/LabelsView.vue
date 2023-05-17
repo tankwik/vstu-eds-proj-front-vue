@@ -8,6 +8,8 @@
       <div class="flex justify-content-between align-items-center">
         <div>
           <h4 class="m-0">Связка пользователей с ЭЦП</h4>
+          
+          <h4 class="m-0">Есть активные изменения: <b :style="{ color: fileStatus ? 'green' : 'red' }">{{ fileStatus ? 'ДА' : 'НЕТ' }}</b></h4>
         </div>
         <div>
           <Button label="Добавить" icon="pi pi-plus" class="p-button-rounded" @click="showCreateModal=true"/>
@@ -101,6 +103,7 @@ export default {
       showModal: false,
       showCreateModal: false,
       editedLabel: null,
+      fileStatus: false,
     }
   },
 
@@ -133,9 +136,10 @@ export default {
     },
 
     reloadLabelsList() {
-      this.labelsService.getLabels().then(data => {
+      this.labelsService.getLabels().then(async (data) => {
         this.labels = data;
         this.loading = false;
+        this.fileStatus = await this.labelsService.getStatus();
       });
     },
 
@@ -205,6 +209,14 @@ export default {
 
   .p-dropdown-label:not(.p-placeholder) {
     text-transform: uppercase;
+  }
+
+  .on_class {
+    color: green;
+  }
+
+  .off_class {
+    color: red;
   }
 }
 </style>

@@ -30,4 +30,8 @@ export default class LabelsService {
     const response = await instance.get('/labels/status');
     return response.data;
   }
+
+  async saveChanges() {
+    return instance.post(`/labels/savechanges`);
+  }
 }

@@ -7,12 +7,12 @@
     <template #header>
       <div class="flex justify-content-between align-items-center">
         <div>
-          <h4 class="m-0">Связка пользователей с ЭЦП</h4>
-          
-          <h4 class="m-0">Есть активные изменения: <b :style="{ color: fileStatus ? 'green' : 'red' }">{{ fileStatus ? 'ДА' : 'НЕТ' }}</b></h4>
+          <h4 class="m-0">Связка пользователей с ЭЦП</h4>          
+          <h4 class="m-0">Есть несохраненные изменения: <b :style="{ color: fileStatus ? 'red' : 'green' }">{{ fileStatus ? 'ДА' : 'НЕТ' }}</b></h4>
         </div>
-        <div>
+        <div class="flex flex-column">
           <Button label="Добавить" icon="pi pi-plus" class="p-button-rounded" @click="showCreateModal=true"/>
+          <Button v-if="fileStatus" label="Сохранить изменения" icon="pi pi-save" class=" mt-3 p-button-rounded" @click="saveChanges"/>
         </div>
       </div>
     </template>
@@ -158,6 +158,11 @@ export default {
       const elementIndex = this.labels.findIndex((item => item.id === id));
       const nextElement = this.labels.find((_, index) => index === elementIndex + 1);
       this.editedLabel = nextElement;
+    },
+
+    async saveChanges() {
+      await this.labelsService.saveChanges();
+      this.fileStatus = false;
     },
   },
 

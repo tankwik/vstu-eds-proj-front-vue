@@ -12,7 +12,7 @@
         </div>
         <div class="flex flex-column">
           <Button label="Добавить" icon="pi pi-plus" class="p-button-rounded" @click="showCreateModal=true"/>
-          <Button v-if="fileStatus" label="Сохранить изменения" icon="pi pi-save" class=" mt-3 p-button-rounded" @click="saveChanges"/>
+          <Button v-if="fileStatus" label="Экспортировать в ФС" icon="pi pi-save" class="p-button-danger mt-3 p-button-rounded" @click="saveChanges"/>
         </div>
       </div>
     </template>
